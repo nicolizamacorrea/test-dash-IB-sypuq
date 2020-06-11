@@ -7,7 +7,6 @@
 import pandas as pd
 import numpy as np
 import math
-import xgboost as xgb
 import plotly.graph_objects as go
 from sklearn.model_selection import train_test_split
 import dash
@@ -118,8 +117,6 @@ slider_8_max =  round(df2[slider_8_label].max())
 # In[7]:
 
 
-
-
 app = dash.Dash()
 
 app.layout = html.Div(style={'textAlign': 'center', 'width': '800px', 'font-family': 'Verdana'},
@@ -161,22 +158,22 @@ app.layout = html.Div(style={'textAlign': 'center', 'width': '800px', 'font-fami
 
                         dcc.Slider(
                             id='X3_slider',
-                            min=slider_3_min,
-                            max=slider_3_max,
-                            step=0.1,
+                            min=4.0,
+                            max=12.0,
+                            step=2.0,
                             value=slider_3_mean,
-                            marks={i: '{} '.format(i) for i in range(slider_3_min, slider_3_max+1)}
+                            marks={opacity: f'{opacity:.1f}' for opacity in [4.0, 6.0, 8.0, 10.0,14.0]}
                         ),
                         
                         html.H4(children=slider_4_label),
 
                         dcc.Slider(
                             id='X4_slider',
-                            min=slider_4_min,
-                            max=slider_4_max,
-                            step=0.1,
+                            min=0,
+                            max=1.78,
+                            step=0.2,
                             value=slider_4_mean,
-                            marks={i: '{} '.format(i) for i in range(slider_4_min, slider_4_max+1)}
+                            marks={opacity: f'{opacity:.1f}' for opacity in [0.0, 0.2, 0.4, 0.6, 1.78]}
                         ),
                         
                         #html.H4(children=slider_3_label),
@@ -200,16 +197,15 @@ app.layout = html.Div(style={'textAlign': 'center', 'width': '800px', 'font-fami
                             value=slider_6_mean,
                             marks={opacity: f'{opacity:.1f}' for opacity in [0.0, 0.01, 0.02, 0.1]}
                         ),
-                        
                         html.H4(children=slider_7_label),
 
                         dcc.Slider(
                             id='X7_slider',
-                            min=slider_7_min,
-                            max=slider_7_max,
+                            min=0.43,
+                            max=0.76,
                             step=0.1,
                             value=slider_7_mean,
-                            marks={i: '{} '.format(i) for i in range(slider_7_min, slider_7_max+1)}
+                            marks={opacity: f'{opacity:.1f}' for opacity in [0.43, 0.45, 0.66, 0.76]}
                         ),
                         
                         html.H4(children=slider_8_label),
@@ -254,7 +250,7 @@ def update_prediction(X1, X2, X3,X4,X6,X7,X8):
 
 if __name__ == "__main__":
     #app.run_server()
-    app.run_server(host='0.0.0.0', port=8080)
+    app.run_server(host='0.0.0.0', port=8080, debug=True)
     
     
 
